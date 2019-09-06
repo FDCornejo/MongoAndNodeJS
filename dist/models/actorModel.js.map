@@ -1,0 +1,1 @@
+{"version":3,"file":"actorModel.js","sourceRoot":"","sources":["../../src/models/actorModel.ts"],"names":[],"mappings":";;;;;AAAA,wDAA+B;AAC/B,IAAI,MAAM,GAAE,kBAAQ,CAAC,MAAM,CAAA;AAE3B,IAAI,WAAW,GAAI,IAAI,MAAM,CAAC;IAC9B,IAAI,EAAC,MAAM;IACX,GAAG,EAAC,MAAM;CACP,CAAC,CAAC;AAEL,MAAM,CAAC,OAAO,GAAE,kBAAQ,CAAC,KAAK,CAAC,OAAO,EAAE,WAAW,CAAC,CAAC"}
