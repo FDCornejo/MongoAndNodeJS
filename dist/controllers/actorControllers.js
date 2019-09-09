@@ -4,10 +4,6 @@ const express_1 = require("express");
 const Actor = require('../models/actorModel');
 exports.actorRouter = express_1.Router();
 exports.actorRouter.get('/', (req, res) => {
-    const b = req.body;
-    res.status(200).json(b);
-});
-exports.actorRouter.get('/prueba', (req, res) => {
     Actor.find((err, Actors) => {
         if (err)
             return res.status(500).send({ message: 'Error interno' });
@@ -34,5 +30,30 @@ exports.actorRouter.post('/save', (req, res) => {
     else {
         res.status(400).send({ message: 'Send all data please' });
     }
+});
+exports.actorRouter.delete('/:id', (req, res) => {
+    const dato = req.params.id;
+    Actor.findByIdAndRemove(dato, (err, result) => {
+        if (err) {
+            return res.status(500).send({ message: 'Internal Server error, product doesn´t Deleted' });
+        }
+        if (result)
+            res.status(200).send({ message: 'Si se buorro' });
+        else
+            res.status(404).send({ message: 'Actor no Borrado!' });
+    });
+});
+exports.actorRouter.patch('/:id', (req, res) => {
+    const elID = req.params.id;
+    const params = req.body;
+    Actor.update({ _id: elID }, { $set: params }, (err, result) => {
+        if (err) {
+            return res.status(500).send({ message: 'Internal Server error, product doesn´t Deleted' });
+        }
+        if (result)
+            res.status(200).send({ message: 'Si Actualizado' });
+        else
+            res.status(404).send({ message: 'Actor no actualizado!' });
+    });
 });
 //# sourceMappingURL=actorControllers.js.map

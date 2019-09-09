@@ -6,36 +6,12 @@ const Actor = require('../models/actorModel');
 const Director = require('../models/directorModel');
 exports.movieRouter = express_1.Router();
 exports.movieRouter.get('/', (req, res) => {
-    const b = req.body;
-    res.status(200).json(b);
-});
-exports.movieRouter.get('/prueba', (req, res) => {
     MovieSchema.find((err, movies) => {
         if (err)
             return res.status(500).send({ message: 'Error interno' });
         if (!movies)
             return res.status(404).send({ message: 'No hay Clientes' });
         return res.status(200).send({ movies });
-    });
-});
-exports.movieRouter.post('/actor', (req, res) => {
-    const params = req.body;
-    Actor.find({ name: params.name }, (err, Actors) => {
-        if (err)
-            return res.status(500).send({ message: 'Error interno' });
-        if (!Actors)
-            return res.status(404).send({ message: 'No hay Actores' });
-        return res.status(200).send({ Actors });
-    });
-});
-exports.movieRouter.post('/director', (req, res) => {
-    const params = req.body;
-    Director.find({ name: params.name }, (err, Directors) => {
-        if (err)
-            return res.status(500).send({ message: 'Error interno' });
-        if (!Directors)
-            return res.status(404).send({ message: 'No hay Directores' });
-        return res.status(200).send({ Directors });
     });
 });
 exports.movieRouter.post('/save', (req, res) => {
@@ -73,5 +49,31 @@ exports.movieRouter.post('/save', (req, res) => {
     else {
         res.status(400).send({ message: 'Send all data please' });
     }
+});
+exports.movieRouter.delete('/:id', (req, res) => {
+    const dato = req.params.id;
+    console.log(dato);
+    MovieSchema.findByIdAndRemove(dato, (err, result) => {
+        if (err) {
+            return res.status(500).send({ message: 'Internal Server error, product doesn´t Deleted' });
+        }
+        if (result)
+            res.status(200).send({ message: 'Si se borro' });
+        else
+            res.status(404).send({ message: 'pelicula no Borrada!' });
+    });
+});
+exports.movieRouter.patch('/:id', (req, res) => {
+    const elID = req.params.id;
+    const params = req.body;
+    MovieSchema.update({ _id: elID }, { $set: params }, (err, result) => {
+        if (err) {
+            return res.status(500).send({ message: 'Internal Server error, product doesn´t Deleted' });
+        }
+        if (result)
+            res.status(200).send({ message: 'Si Actualizado' });
+        else
+            res.status(404).send({ message: 'Actor no actualizado!' });
+    });
 });
 //# sourceMappingURL=movieController.js.map
